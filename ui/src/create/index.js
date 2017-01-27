@@ -1,25 +1,22 @@
-var player;
-var platforms;
-var cursors;
-var jumpButton;
+import Context from 'Context'
 
 export default () => {
 
-    player = game.add.sprite(100, 200, 'player');
+    Context.player = Context.game.add.sprite(100, 200, 'player');
 
-    game.physics.arcade.enable(player);
+    Context.game.physics.arcade.enable(Context.player);
 
-    player.body.collideWorldBounds = true;
-    player.body.gravity.y = 500;
+    Context.player.body.collideWorldBounds = true;
+    Context.player.body.gravity.y = 500;
 
-    platforms = game.add.physicsGroup();
+    Context.platforms = Context.game.add.physicsGroup();
 
-    platforms.create(500, 150, 'platform');
-    platforms.create(-200, 300, 'platform');
-    platforms.create(400, 450, 'platform');
+    Context.platforms.create(500, 150, 'platform');
+    Context.platforms.create(-200, 300, 'platform');
+    Context.platforms.create(400, 450, 'platform');
 
-    platforms.setAll('body.immovable', true);
+    Context.platforms.setAll('body.immovable', true);
 
-    cursors = game.input.keyboard.createCursorKeys();
-    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    Context.cursors = Context.game.input.keyboard.createCursorKeys();
+    Context.jumpButton = Context.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
