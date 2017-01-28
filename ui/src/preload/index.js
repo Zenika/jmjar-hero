@@ -1,13 +1,9 @@
-import Context from 'Context'
+import Game from 'Game'
 
 export default () => {
 
-    Context.game.stage.backgroundColor = '#85b5e1';
+    Game.game.stage.backgroundColor = '#85b5e1';
 
-    Context.game.load.baseURL = 'http://examples.phaser.io/assets/';
-    Context.game.load.crossOrigin = 'anonymous';
-
-    Context.game.load.image('player', 'sprites/phaser-dude.png');
-    Context.game.load.image('platform', 'sprites/platform.png');
+    Game.game.load.spritesheet('button', 'assets/blueButton.png', 50, 48);
 
 }
