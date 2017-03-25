@@ -5,7 +5,7 @@
         radius: 'rand(10, 20)',
         pathScale: 'rand(.5, 1)',
         swirlFrequency: 'rand(2,4)',
-        swirlSize: 'rand(6,14)'
+        swirlSize: 'rand(6,14)',
     };
     let SWIRL_OPTS1 = Object.assign({}, this.SWIRL_OPTS, {direction: -1});
     let swirl1 = new mojs.ShapeSwirl(SWIRL_OPTS);

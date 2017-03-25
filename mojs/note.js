@@ -1,4 +1,4 @@
-function getNote(x, callback) {
+function getNote(channel, delay, callback) {
 
     let humanTime = 500;
     let speed = (targetY - topOrigin) / 3000;
@@ -6,14 +6,14 @@ function getNote(x, callback) {
 
     let isOk = false;
     let result = new mojs.Shape({
-        x: x,
+        x: channel.x,
         shape: 'circle',
         y: topOrigin,
         radius: {0: noteRadius},
-        fill: 'darkcyan',
+        fill: 'white',
         scale: {0: 1},
         duration: 500,
-        delay: 0,
+        delay: delay,
         easing: 'cubic.out',
         isShowStart: true
     }).then({
@@ -23,7 +23,7 @@ function getNote(x, callback) {
         easing: 'linear.none',
         onComplete: function () {
             isOk = false;
-            console.log('nop');
+            document.addEventListener('keydown', eventListener);
         }
     }).then({
         y: {[targetY - distance]: targetY},
@@ -31,17 +31,21 @@ function getNote(x, callback) {
         delay: 0,
         easing: 'linear.none',
     }).then({
-        fill: {['darkcyan']: 'white'},
         radius: {[noteRadius]: 0},
         duration: 100,
         easing: 'cubic.out',
         onComplete: function () {
-            console.log(isOk);
             callback(isOk);
+            document.removeEventListener('keydown', eventListener);
+            this.el.remove();
         }
     });
-    result.triggerOk = function () {
-        isOk = true;
+
+    function eventListener(event) {
+        if (event.key === channel.key) {
+            isOk = true;
+        }
     }
+
     return result;
 }
