@@ -50,7 +50,7 @@ importedNotes = importedNotes.filter(function (note) {
 });
 console.log("notes ------------------------------------------");
 console.log(importedNotes);
-fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify(importedNotes) + ';');
+fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify({notes: noteToKeep, stream: importedNotes}) + ';');
 
 //from https://www.gamedev.net/topic/535653-convert-midi-deltatime-to-milliseconds/
 function deltaTimeToMS(deltaTime, tempo, ticksPerBeat) {

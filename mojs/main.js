@@ -29,11 +29,18 @@ function noteFactory(channel, delay) {
     });
 }
 
+/* test loot
+ let timeline = new mojs.Timeline();
+ for (let index = 0; index < 10; index++) {
+ let channel = channels[_.random(0, channels.length - 1)];
+ timeline.add(noteFactory(channel, _.random(500, 5000)));
+ }
+ timeline.play();
+ */
+
 let timeline = new mojs.Timeline();
-for (let index = 0; index < 10; index++) {
-    let channel = channels[_.random(0, channels.length - 1)];
-    timeline.add(noteFactory(channel, _.random(500, 5000)));
-}
+song.stream.forEach(function (note) {
+    let channel = channels[song.notes.indexOf(note.noteNumber)];
+    timeline.add(noteFactory(channel, note.delay));
+});
 timeline.play();
-
-
