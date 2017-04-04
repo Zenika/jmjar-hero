@@ -8,7 +8,7 @@ const leadTrack = 1;
 const file = fs.readFileSync('Oxygene4.mid', 'binary');
 const forcedBPM = 121;
 const firstNoteAt = 9500;
-const duration = 101541;
+const duration = 111541.0;
 //</config>
 
 
