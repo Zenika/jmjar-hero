@@ -2,17 +2,21 @@ const midiFileParser = require('midi-file-parser');
 const fs = require('fs');
 
 
-//Config for JM Oxygene4
+//<config> for JM Oxygene4
 const fileName = 'Oxygene4.mid';
 const noteToKeep = [72, 67, 63, 67, 60, 72];
 const leadTrack = 1;
 const file = fs.readFileSync('Oxygene4.mid', 'binary');
+const forcedBPM = 121;
+const firstNoteAt = 9500;
+const duration = 101541;
+//</config>
 
 
 const midi = midiFileParser(file);
 
 //extract BPM (get 120 but other tools 125 ???)
-const ticksPerBeat = midi.header.ticksPerBeat;
+const ticksPerBeat = forcedBPM || midi.header.ticksPerBeat;
 
 //extract tempo used to calculate deltaTime in ms
 let tempo = 0;
@@ -25,7 +29,7 @@ midi.tracks[0].forEach(function (info) {
 //Convert deltaTime from last event to delayInMsFromStart
 let importedNotes = [];
 let delayInMsFromStart = 0;
-midi.tracks[1].forEach(function (info) {
+midi.tracks[leadTrack].forEach(function (info) {
     delayInMsFromStart += deltaTimeToMS(info.deltaTime, tempo, ticksPerBeat);
     if (info.subtype === 'noteOn') {
         importedNotes.push({delay: delayInMsFromStart, noteNumber: info.noteNumber});
@@ -46,8 +50,13 @@ console.log(stats);
 
 //keep only 6 notes :
 importedNotes = importedNotes.filter(function (note) {
-    return noteToKeep.indexOf(note.noteNumber) !== -1;
+    return noteToKeep.indexOf(note.noteNumber) !== -1 && note.delay < duration;
 });
+
+importedNotes.forEach(function (note) {
+    note.delay = note.delay - (7000 + firstNoteAt);
+});
+
 console.log("notes ------------------------------------------");
 console.log(importedNotes);
 fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify({notes: noteToKeep, stream: importedNotes}) + ';');
