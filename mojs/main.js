@@ -31,7 +31,7 @@ function noteFactory(channel, delay) {
 
 let timeline = new mojs.Timeline();
 song.stream.forEach(function (note) {
-    let channel = channels[song.notes.indexOf(note.noteNumber)];
+    let channel = channels[song.notes.indexOf(note.noteNumber) % (channels.length)];
     timeline.add(noteFactory(channel, note.delay));
 });
 

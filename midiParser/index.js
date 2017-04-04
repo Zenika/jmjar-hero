@@ -4,7 +4,6 @@ const fs = require('fs');
 
 //<config> for JM Oxygene4
 const fileName = 'Oxygene4.mid';
-const noteToKeep = [72, 67, 63, 67, 60, 72];
 const leadTrack = 1;
 const file = fs.readFileSync('Oxygene4.mid', 'binary');
 const forcedBPM = 121;
@@ -36,11 +35,17 @@ midi.tracks[leadTrack].forEach(function (info) {
     }
 });
 
+importedNotes = importedNotes.filter(function (note) {
+    return note.delay < duration;
+});
+
 //display stats on note occurency
 let stats = {};
+let noteList = [];
 importedNotes.forEach(function (note) {
     if (!stats[note.noteNumber]) {
         stats[note.noteNumber] = 1;
+        noteList.push(note.noteNumber);
     } else {
         stats[note.noteNumber]++;
     }
@@ -48,10 +53,6 @@ importedNotes.forEach(function (note) {
 console.log("note frequency");
 console.log(stats);
 
-//keep only 6 notes :
-importedNotes = importedNotes.filter(function (note) {
-    return noteToKeep.indexOf(note.noteNumber) !== -1 && note.delay < duration;
-});
 
 importedNotes.forEach(function (note) {
     note.delay = note.delay - (7000 + firstNoteAt);
@@ -59,7 +60,10 @@ importedNotes.forEach(function (note) {
 
 console.log("notes ------------------------------------------");
 console.log(importedNotes);
-fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify({notes: noteToKeep, stream: importedNotes}) + ';');
+fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify({
+        notes: noteList.sort(),
+        stream: importedNotes
+    }) + ';');
 
 //from https://www.gamedev.net/topic/535653-convert-midi-deltatime-to-milliseconds/
 function deltaTimeToMS(deltaTime, tempo, ticksPerBeat) {
