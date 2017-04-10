@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
+
 body {
     background-image: url(https://jobs.zenika.com/wp-content/uploads/2014/04/row-svg-diamonds.svg);
     background-color: black;
@@ -24,4 +26,26 @@ body {
 .white-string {
     box-shadow: 0px 0px 5px 1px white;
     transition: box-shadow 0.2s
+}
+
+#score {
+    display: block;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+    font-family: 'Bungee Shade', cursive;
+    color: gold;
+}
+
+#totalScore {
+    display: block;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    font-size: 70px;
+    font-family: 'Bungee Shade', cursive;
+    color: gold;
 }

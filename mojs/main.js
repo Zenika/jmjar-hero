@@ -21,9 +21,10 @@ let failedNoteX = -200;
 let failedNoteY = -320;
 
 function noteFactory(channel, delay) {
-    return getNote(channel, delay, function (isOk) {
-        if (isOk) {
-            // success(channel.x, {[targetY]: targetY - 150});
+    return getNote(channel, delay, function (input) {
+        if (input.isOk) {
+            success(channel.x, {[targetY]: targetY - 150});
+            score(input);
         } else {
             failedNoteY = failedNoteY + noteRadius / 4;
             failure({[channel.x]: failedNoteX}, {[(targetY - 150) ]: failedNoteY});
@@ -31,7 +32,11 @@ function noteFactory(channel, delay) {
     });
 }
 
-let timeline = new mojs.Timeline();
+let timeline = new mojs.Timeline({
+    onStart: () => {
+        window.Timer = Date.now();
+    }
+});
 song.stream.forEach(function (note) {
     let channel = channels[song.notes.indexOf(note.noteNumber) % (channels.length)];
     timeline.add(noteFactory(channel, note.delay));
@@ -39,6 +44,6 @@ song.stream.forEach(function (note) {
 
 let audioPlayer = document.getElementById("audiotrack");
 audioPlayer.addEventListener("canplaythrough", function () {
-    //audioPlayer.play();
+    audioPlayer.play();
     timeline.play();
 });

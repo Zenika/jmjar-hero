@@ -4,7 +4,12 @@ function getNote(channel, delay, callback) {
     let speed = (targetY - topOrigin) / 3000;
     let distance = humanTime * speed;
 
-    let isOk = false;
+    let input = {
+        isOk: false,
+        inputTime: 0,
+        perfectTime: delay + 3000,
+    };
+
     let result = new mojs.Shape({
         x: channel.x,
         shape: 'circle',
@@ -23,28 +28,30 @@ function getNote(channel, delay, callback) {
         delay: 0,
         easing: 'linear.none',
         onComplete: function () {
-            isOk = false;
+            input.isOk = false;
             document.addEventListener('keydown', eventListener);
         }
     }).then({
         y: {[targetY - distance]: targetY},
         duration: 500,
         delay: 0,
-        easing: 'linear.none',
+        easing: 'linear.none'
     }).then({
         radius: {[noteRadius]: 0},
         duration: 100,
         easing: 'cubic.out',
         onComplete: function () {
-            callback(isOk);
+            callback(input);
             document.removeEventListener('keydown', eventListener);
             this.el.remove();
         }
     });
 
     function eventListener(event) {
+        const inputTime = Date.now() - Timer;
         if (event.key === channel.key) {
-            isOk = true;
+            input.isOk = true;
+            input.inputTime = inputTime;
         }
     }
 
