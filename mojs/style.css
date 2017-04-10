@@ -1,4 +1,27 @@
 body {
     background-image: url(https://jobs.zenika.com/wp-content/uploads/2014/04/row-svg-diamonds.svg);
-    background-color: #af1e3a;
+    background-color: black;
+}
+
+#harp {
+    transform: perspective(30px) rotateX(-1deg) translateY(600px) scale(1.2);
+}
+
+.string {
+    box-shadow: 0px 0px 5px 1px red;
+    transition: box-shadow 0.2s;
+}
+
+.stringLight {
+    box-shadow: 0px 0px 17px 5px white;
+    border-radius: 50%;
+}
+
+.troll {
+    background-image: url('./troll.png');
+}
+
+.white-string {
+    box-shadow: 0px 0px 5px 1px white;
+    transition: box-shadow 0.2s
 }

@@ -1,3 +1,5 @@
+window.harp = document.getElementById("harp");
+
 let channels = [
     {x: -140, key: 'q'},
     {x: -80, key: 's'},
@@ -9,7 +11,7 @@ let channels = [
 
 //Setup 6 strings
 _.forEach(channels, function (channel) {
-    string(channel.x);
+    string(channel);
 });
 //Setup the target place : note goes to it
 target();
@@ -21,10 +23,10 @@ let failedNoteY = -320;
 function noteFactory(channel, delay) {
     return getNote(channel, delay, function (isOk) {
         if (isOk) {
-            success(channel.x, {[targetY]: targetY - 150});
+            // success(channel.x, {[targetY]: targetY - 150});
         } else {
             failedNoteY = failedNoteY + noteRadius / 4;
-            failure({[channel.x]: failedNoteX}, {[targetY]: failedNoteY});
+            failure({[channel.x]: failedNoteX}, {[(targetY - 150) ]: failedNoteY});
         }
     });
 }
@@ -37,6 +39,6 @@ song.stream.forEach(function (note) {
 
 let audioPlayer = document.getElementById("audiotrack");
 audioPlayer.addEventListener("canplaythrough", function () {
-    audioPlayer.play();
+    //audioPlayer.play();
     timeline.play();
 });

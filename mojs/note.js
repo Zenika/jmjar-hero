@@ -15,7 +15,8 @@ function getNote(channel, delay, callback) {
         duration: 500,
         delay: delay,
         easing: 'cubic.out',
-        isShowStart: true
+        isShowStart: true,
+        parent: harp
     }).then({
         y: {[topOrigin]: targetY - distance},
         duration: 2500,
