@@ -43,7 +43,11 @@ window.timeline = new mojs.Timeline({
         window.Timer = Date.now();
     },
     onComplete: () => {
+        let scope = angular.element(document.body).scope();
+        scope.$apply(scope.$broadcast('timeline-completed', {score: totalScore, fails: nbFail}));
         nbFail = 0;
+        totalScore = 0;
+        $(".troll").remove();
     }
 });
 

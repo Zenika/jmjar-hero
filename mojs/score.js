@@ -1,5 +1,5 @@
 (function () {
-    let totalScore = 0;
+    window.totalScore = 0;
 
     function score(input) {
         const reactionTime = Math.abs(input.inputTime - input.perfectTime);
