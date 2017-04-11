@@ -1,5 +1,9 @@
 window.harp = document.getElementById("harp");
 
+let noteRadius = 30;
+let topOrigin = -350;
+let targetY = 290;
+
 let channels = [
     {x: -140, key: 'q'},
     {x: -80, key: 's'},
@@ -17,33 +21,33 @@ _.forEach(channels, function (channel) {
 target();
 
 // "score position"
-let failedNoteX = -200;
+let failedNoteX = 220;
 let failedNoteY = -320;
-
+let nbFail = 0;
 function noteFactory(channel, delay) {
     return getNote(channel, delay, function (input) {
         if (input.isOk) {
             success(channel.x, {[targetY]: targetY - 150});
             score(input);
         } else {
-            failedNoteY = failedNoteY + noteRadius / 4;
-            failure({[channel.x]: failedNoteX}, {[(targetY - 150) ]: failedNoteY});
+            nbFail++;
+            let failY = failedNoteY + (nbFail % 60) * (noteRadius / 4);
+            let failX = failedNoteX + Math.ceil(nbFail / 60) * noteRadius * 2;
+            failure({[channel.x]: failX}, {[(targetY - 150) ]: failY});
         }
     });
 }
 
-let timeline = new mojs.Timeline({
+window.timeline = new mojs.Timeline({
     onStart: () => {
         window.Timer = Date.now();
+    },
+    onComplete: () => {
+        nbFail = 0;
     }
 });
+
 song.stream.forEach(function (note) {
     let channel = channels[song.notes.indexOf(note.noteNumber) % (channels.length)];
     timeline.add(noteFactory(channel, note.delay));
-});
-
-let audioPlayer = document.getElementById("audiotrack");
-audioPlayer.addEventListener("canplaythrough", function () {
-    audioPlayer.play();
-    timeline.play();
 });

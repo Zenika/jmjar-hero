@@ -3,6 +3,8 @@
 body {
     background-image: url(https://jobs.zenika.com/wp-content/uploads/2014/04/row-svg-diamonds.svg);
     background-color: black;
+    overflow: hidden;
+    color: gold;
 }
 
 #harp {
@@ -43,9 +45,92 @@ body {
     position: absolute;
     top: 50px;
     right: 100px;
-    width: 100px;
-    height: 100px;
     font-size: 70px;
     font-family: 'Bungee Shade', cursive;
     color: gold;
+}
+
+#highScores {
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    margin: 15px;
+}
+
+h1 {
+    font-family: 'Bungee Shade', cursive;
+}
+
+#highScores table {
+    width: 100%;
+
+}
+
+#highScores td {
+    font-size: 24px;
+}
+
+#highScores td.rank {
+    width: 10%;
+}
+
+#highScores td.value {
+    text-align: right;
+}
+
+#player {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#player > * {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#player select {
+    border: none;
+    box-shadow: none;
+    background-image: none;
+    background-color: transparent;
+    color: white;
+    -webkit-appearance: none;
+
+}
+
+#player select:focus {
+    outline: none;
+}
+
+#player input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+#player button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    width: 100%;
+    text-align: end;
+}
+
+.hbox {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.hbox > * {
+    margin-right: 15px;
 }

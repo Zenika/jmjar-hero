@@ -1,33 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <title>JMJar-Hero</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" media="screen" title="no title"
+          charset="utf-8">
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
     <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
 </head>
-<body>
-<audio controls src="../music/OXYGENE_4_short.mp3" id="audiotrack"></audio>
-<div id="totalScore"></div>
-
-<script type="application/javascript">
-    let noteRadius = 30;
-    let topOrigin = -350;
-    let targetY = 290;
-</script>
-
+<body ng-controller="MainController as main" ng-cloak>
+<div id="totalScore">{{totalScore}}</div>
 <div id="harp"></div>
-<div id="score"></div>
+<div id="score">10pts</div>
 
-<script type="text/javascript" src="lib/lodash.js"></script>
+<div id="player">
+    <h1>Player</h1>
+    <div>
+        <div class="hbox">
+            <p>Songs : </p>
+            <select ng-model="main.currentTitle">
+                <option ng-repeat="song in main.songs" value="{{song.path}}">{{song.name}}</option>
+            </select>
+        </div>
+        <div class="hbox">
+            <p>Name : </p>
+            <input type="text" placeholder="Player Name" ng-model="main.currentPlayer">
+        </div>
+        <button ng-click="main.onPlay()"><span class="glyphicon glyphicon-play"></span></button>
+    </div>
+</div>
+<div id="highScores">
+    <h1>High Scores</h1>
+    <table>
+        <tr ng-repeat="score in (main.highScores | limitTo: 11 | orderBy:'value':true)">
+            <td class="rank">{{($index+1)}}</td>
+            <td class="player">{{score.player}}</td>
+            <td class="value">{{score.value}}</td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
 <script type="text/javascript" src="../midiParser/Oxygene4.mid.js"></script>
-<script type="text/javascript" src="lib/mo.js"></script>
-<script type="text/javascript" src="./note.js"></script>
-<script type="text/javascript" src="./failure.js"></script>
-<script type="text/javascript" src="./string.js"></script>
-<script type="text/javascript" src="./target.js"></script>
-<script type="text/javascript" src="./success.js"></script>
+<script type="text/javascript" src="node_modules/mo-js/build/mo.js"></script>
+<script type="text/javascript" src="harp/note.js"></script>
+<script type="text/javascript" src="harp/failure.js"></script>
+<script type="text/javascript" src="harp/string.js"></script>
+<script type="text/javascript" src="harp/target.js"></script>
+<script type="text/javascript" src="harp/success.js"></script>
 <script type="text/javascript" src="./score.js"></script>
-<script type="text/javascript" src="./main.js"></script>
+<script type="text/javascript" src="./app.js"></script>
+<script type="text/javascript" src="harp/timeline.js"></script>
 </body>
 </html>

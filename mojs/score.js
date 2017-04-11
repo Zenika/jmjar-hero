@@ -33,13 +33,13 @@
         const scoreHtml = new mojs.Html({
             el: '#score',
             duration: 300,
-            opacity: {0:1},
-            scale: {0:1},
+            opacity: {0: 1},
+            scale: {0: 1},
             y: 800,
             x: 600
         }).then({
-            duration: 100,
-            scale: {1:1.1},
+            duration: 200,
+            scale: {1: 1.1},
             onComplete: () => {
                 scoreDiv.innerText = '';
             }
@@ -49,6 +49,6 @@
         totalScoreDiv.innerText = totalScore;
     }
 
+    displayScore(totalScore);
     window.score = score;
 })();
-

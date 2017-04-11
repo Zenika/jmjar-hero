@@ -6,11 +6,7 @@
             fill: 'transparent',
             className: 'troll',
             duration: 800,
-            radius: noteRadius / 2,
-            onUpdate: function (progress) {
-                var bounceProgress = mojs.easing.bounce.out(progress);
-                this.el.style.transform = 'translateY(' + 200 * bounceProgress + 'px)';
-            },
+            radius: noteRadius / 2
         }).tune({x, y}).play();
     }
 
