@@ -36,8 +36,8 @@ angular.module('app', []).controller('MainController', function ($scope) {
             player: main.currentPlayer,
             value: score
         });
-        _.sortBy(lastHighScore, function (player) {
-            return -1 * player.value;
+        lastHighScore = _.sortBy(lastHighScore, function (player) {
+            return player.value;
         });
         main.highScores = lastHighScore;
         localStorage.setItem("hightScore", JSON.stringify(lastHighScore));
