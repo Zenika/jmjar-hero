@@ -31,7 +31,7 @@ function noteFactory(channel, delay) {
             score(input);
         } else {
             nbFail++;
-            let failY = failedNoteY + (nbFail % 60) * (noteRadius / 4);
+            let failY = failedNoteY + (nbFail % 60.5) * (noteRadius / 4);
             let failX = failedNoteX + Math.ceil(nbFail / 60) * noteRadius * 2;
             failure({[channel.x]: failX}, {[(targetY - 150) ]: failY});
         }
