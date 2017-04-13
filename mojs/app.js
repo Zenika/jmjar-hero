@@ -48,10 +48,12 @@ angular.module('app', []).controller('MainController', function ($scope) {
     });
 
     function sortScores(player1, player2) {
-        if (player1.score === player2.score) {
-            return player1.fails > player2.fails;
-        } else {
-            return player1.score < player2.score;
-        }
+
+        if (player1.score > player2.score) return -1;
+        if (player1.score < player2.score) return 1;
+
+        if (player1.fails < player2.fails) return -1;
+        if (player1.fails > player2.fails) return 1;
+
     }
 });
