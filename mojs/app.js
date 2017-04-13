@@ -31,23 +31,18 @@ angular.module('app', []).controller('MainController', function ($scope) {
         }
     };
     $scope.$on("timeline-completed", function (event, score) {
-        let lastHighScore = [];
-        try {
-            if (localStorage.getItem("hightScore")) {
-                lastHighScore = JSON.parse(localStorage.getItem("hightScore"));
-            }
-        } catch (e) {
-            //nop
-        }
-        lastHighScore.push({
+        main.highScores.push({
             player: main.currentPlayer,
             value: score
         });
-        lastHighScore = _.sortBy(lastHighScore, function (player) {
-            return player.value;
-        }, false);
-        main.highScores = lastHighScore;
-        localStorage.setItem("hightScore", JSON.stringify(lastHighScore));
+        main.highScores = sortScores(main.highScores);
+        localStorage.setItem("hightScore", JSON.stringify(main.highScores));
         totalScore = 0;
     });
+
+    function sortScores(lastHighScore) {
+        return _.sortBy(lastHighScore, function (player) {
+            return player.value.score;
+        }, false);
+    }
 });
