@@ -10,7 +10,7 @@ body {
 }
 
 #harp {
-    transform: perspective(30px) rotateX(-1deg) translateY(600px) scale(1.2);
+    transform: perspective(30px) rotateX(-1deg) translateY(600px) scale(1.5);
 }
 
 #logo {
@@ -42,8 +42,10 @@ body {
 #score {
     display: block;
     position: absolute;
-    width: 100px;
+    width: 100%;
+    text-align: center;
     height: 100px;
+    bottom: 20%;
     font-size: 30px;
     font-family: 'Bungee Shade', cursive;
     color: gold;

@@ -11,7 +11,7 @@
 <body ng-controller="MainController as main" ng-cloak>
 <div id="totalScore">{{main.currentPlayer.score}}</div>
 <div id="harp" tabindex="1"></div>
-<div id="score">10pts</div>
+<div id="score"></div>
 <img id="logo" src="./img/logo_zenika_gris.png"/>
 
 <div id="player">
@@ -42,8 +42,11 @@
             <td class="value">{{player.score}}</td>
         </tr>
     </table>
-    <table>
-        <tr ng-if="main.currentPlayer.rank>10" class="currentPlayerRank">
+    <table ng-if="main.currentPlayer.rank>10">
+        <tr>
+            <td class="rank">...</td>
+        </tr>
+        <tr class="currentPlayerRank">
             <td class="rank">{{(main.currentPlayer.rank+1)}}</td>
             <td class="player">{{main.currentPlayer.name}}</td>
             <td class="value">{{main.currentPlayer.score}}</td>

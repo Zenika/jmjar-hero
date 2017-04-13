@@ -5,22 +5,22 @@
         let scoreLabel;
         let scoreToAdd = 0;
         if (reactionTime <= 100) {
-            scoreLabel = '120pts';
+            scoreLabel = '+120pts';
             scoreToAdd = 120;
         } else if (reactionTime > 100 && reactionTime <= 250) {
-            scoreLabel = '100pts';
+            scoreLabel = '+100pts';
             scoreToAdd = 100;
         } else if (reactionTime > 250 && reactionTime <= 400) {
-            scoreLabel = '80pts';
+            scoreLabel = '+80pts';
             scoreToAdd = 80;
         } else if (reactionTime > 400 && reactionTime <= 550) {
-            scoreLabel = '60pts';
+            scoreLabel = '+60pts';
             scoreToAdd = 60;
         } else if (reactionTime > 550 && reactionTime <= 700) {
-            scoreLabel = '40pts';
+            scoreLabel = '+40pts';
             scoreToAdd = 40;
         } else if (reactionTime > 700 && reactionTime <= 850) {
-            scoreLabel = '20pts';
+            scoreLabel = '+20pts';
             scoreToAdd = 20;
         }
         let scope = angular.element(document.body).scope();
@@ -36,8 +36,6 @@
             duration: 300,
             opacity: {0: 1},
             scale: {0: 1},
-            y: 800,
-            x: 600
         }).then({
             duration: 200,
             scale: {1: 1.1},
