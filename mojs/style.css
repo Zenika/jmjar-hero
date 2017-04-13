@@ -3,12 +3,21 @@
 body {
     background-image: url(https://jobs.zenika.com/wp-content/uploads/2014/04/row-svg-diamonds.svg);
     background-color: black;
+    background-image: url('./img/jmjar_logo/typo_gris.png');
+    background-size: cover;
     overflow: hidden;
     color: gold;
 }
 
 #harp {
     transform: perspective(30px) rotateX(-1deg) translateY(600px) scale(1.2);
+}
+
+#logo {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    height: 150px;
 }
 
 .string {
@@ -22,7 +31,7 @@ body {
 }
 
 .troll {
-    background-image: url('./troll.png');
+    background-image: url('./img/troll.png');
 }
 
 .white-string {
@@ -38,6 +47,16 @@ body {
     font-size: 30px;
     font-family: 'Bungee Shade', cursive;
     color: gold;
+}
+
+#streak {
+    display: block;
+    position: absolute;
+    top: 200px;
+    right: 100px;
+    font-size: 100px;
+    font-family: 'Bungee Shade', cursive;
+    color: pink;
 }
 
 #totalScore {
