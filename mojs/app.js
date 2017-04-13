@@ -15,12 +15,19 @@ angular.module('app', []).controller('MainController', function ($scope) {
     main.songs = [{name: "Oxygen 4", path: "../music/OXYGENE_4_short.mp3"}];
     main.currentTitle = main.songs[0].path;
     main.onPlay = function () {
-        if (main.currentPlayer.length > 0) {
-            var audio = new Audio(main.currentTitle);
+        if (main.currentPlayer && main.currentPlayer.length > 0) {
+            let audio = new Audio(main.currentTitle);
             audio.addEventListener("play", function () {
                 window.timeline.play();
             });
             audio.play();
+        } else {
+            main.isError = true;
+        }
+    };
+    main.onNameChange = function () {
+        if (main.currentPlayer && main.currentPlayer.length > 0) {
+            main.isError = false;
         }
     };
     $scope.$on("timeline-completed", function (event, score) {
@@ -38,7 +45,7 @@ angular.module('app', []).controller('MainController', function ($scope) {
         });
         lastHighScore = _.sortBy(lastHighScore, function (player) {
             return player.value;
-        });
+        }, false);
         main.highScores = lastHighScore;
         localStorage.setItem("hightScore", JSON.stringify(lastHighScore));
         totalScore = 0;

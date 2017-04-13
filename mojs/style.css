@@ -134,3 +134,20 @@ h1 {
 .hbox > * {
     margin-right: 15px;
 }
+
+.name-error {
+    animation-duration: 200ms;
+    animation-name: blink;
+    animation-iteration-count: 3;
+    animation-direction: alternate;
+    color: red;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

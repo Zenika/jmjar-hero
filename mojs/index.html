@@ -17,14 +17,14 @@
     <h1>Player</h1>
     <div>
         <div class="hbox">
-            <p>Songs : </p>
+            <p>Song : </p>
             <select ng-model="main.currentTitle">
                 <option ng-repeat="song in main.songs" value="{{song.path}}">{{song.name}}</option>
             </select>
         </div>
-        <div class="hbox">
+        <div class="hbox name" ng-class="{'name-error':main.isError}">
             <p>Name : </p>
-            <input type="text" placeholder="Player Name" ng-model="main.currentPlayer">
+            <input type="text" ng-change="main.onNameChange()" placeholder="Player Name" ng-model="main.currentPlayer">
         </div>
         <button ng-click="main.onPlay()"><span class="glyphicon glyphicon-play"></span></button>
     </div>
