@@ -1,5 +1,6 @@
 window.harp = document.getElementById("harp");
 
+let scope;
 let noteRadius = 30;
 let topOrigin = -350;
 let targetY = 290;
@@ -34,20 +35,20 @@ function noteFactory(channel, delay) {
             let failY = failedNoteY + (nbFail % 60.5) * (noteRadius / 4);
             let failX = failedNoteX + Math.ceil(nbFail / 60) * noteRadius * 2;
             failure({[channel.x]: failX}, {[(targetY - 150) ]: failY});
+            scope.$apply(scope.$broadcast('failed'));
         }
     });
 }
 
 window.timeline = new mojs.Timeline({
     onStart: () => {
+        scope = angular.element(document.body).scope();
         window.Timer = Date.now();
     },
     onComplete: () => {
-        let scope = angular.element(document.body).scope();
-        scope.$apply(scope.$broadcast('timeline-completed', {score: totalScore, fails: nbFail}));
-        nbFail = 0;
-        totalScore = 0;
+        scope.$apply(scope.$broadcast('timeline-completed', {fails: nbFail}));
         $(".troll").remove();
+        nbFail = 0;
     }
 });
 

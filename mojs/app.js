@@ -36,6 +36,13 @@ angular.module('app', []).controller('MainController', function ($scope) {
         }
     };
 
+    main.onKeyPressed = function ($event) {
+        if ($event.key === "Enter") {
+            main.onPlay();
+            document.getElementById("harp").focus();
+        }
+    };
+
     $scope.$on("timeline-completed", function (event) {
         main.highScores = main.highScores.sort(sortScores);
         localStorage.setItem("hightScore", JSON.stringify(main.highScores));
@@ -43,9 +50,19 @@ angular.module('app', []).controller('MainController', function ($scope) {
 
     $scope.$on("scope-updated", function (event, scoreToAdd) {
         main.currentPlayer.score += scoreToAdd;
+        updateRank();
+    });
+    $scope.$on("failed", function (event) {
+        main.currentPlayer.fails++;
+        updateRank();
+    });
+
+    let updateRank = _.debounce(_updateRank, 250);
+
+    function _updateRank() {
         main.highScores = main.highScores.sort(sortScores);
         main.currentPlayer.rank = main.highScores.indexOf(main.currentPlayer);
-    });
+    }
 
     function sortScores(player1, player2) {
 

@@ -10,9 +10,9 @@
 </head>
 <body ng-controller="MainController as main" ng-cloak>
 <div id="totalScore">{{main.currentPlayer.score}}</div>
-<div id="harp"></div>
+<div id="harp" tabindex="1"></div>
 <div id="score">10pts</div>
-<img id="logo" src="./img/logo_zenika_gris.png" />
+<img id="logo" src="./img/logo_zenika_gris.png"/>
 
 <div id="player">
     <h1>Player</h1>
@@ -25,7 +25,8 @@
         </div>
         <div class="hbox name" ng-class="{'name-error':main.isError}">
             <p>Name : </p>
-            <input type="text" ng-change="main.onNameChange()" placeholder="Player Name"
+            <input type="text" ng-change="main.onNameChange()" ng-keypress="main.onKeyPressed($event)"
+                   placeholder="Player Name"
                    ng-model="main.currentName">
         </div>
         <button ng-click="main.onPlay()"><span class="glyphicon glyphicon-play"></span></button>
@@ -34,7 +35,7 @@
 <div id="highScores">
     <h1>High Scores</h1>
     <table>
-        <tr ng-repeat="player in (main.highScores | limitTo: 11) track by $index"
+        <tr ng-repeat="player in (main.highScores | limitTo: 10) track by $index"
             ng-class="{'currentPlayerRank':player===main.currentPlayer}">
             <td class="rank">{{($index+1)}}</td>
             <td class="player">{{player.name}}</td>
@@ -42,7 +43,7 @@
         </tr>
     </table>
     <table>
-        <tr ng-if="main.currentPlayer.rank>10">
+        <tr ng-if="main.currentPlayer.rank>10" class="currentPlayerRank">
             <td class="rank">{{(main.currentPlayer.rank+1)}}</td>
             <td class="player">{{main.currentPlayer.name}}</td>
             <td class="value">{{main.currentPlayer.score}}</td>
