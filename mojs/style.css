@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
 
 body {
-    background-image: url(https://jobs.zenika.com/wp-content/uploads/2014/04/row-svg-diamonds.svg);
     background-color: black;
-    background-image: url('./img/jmjar_logo/typo_gris.png');
     background-size: cover;
     overflow: hidden;
     color: gold;
+}
+
+#logoJmJar {
+    max-width: 300px;
 }
 
 #harp {
@@ -39,7 +41,7 @@ body {
     transition: box-shadow 0.2s
 }
 
-#score {
+.score {
     display: block;
     position: absolute;
     width: 100%;

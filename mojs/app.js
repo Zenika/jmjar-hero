@@ -1,6 +1,9 @@
 angular.module('app', []).controller('MainController', function ($scope) {
     let main = this;
     main.highScores = [];
+    main.scoreIncrement0 = "";
+    main.scoreIncrement1 = "";
+    main.scoreIncrement2 = "";
 
     try {
         if (localStorage.getItem("hightScore")) {
@@ -48,10 +51,6 @@ angular.module('app', []).controller('MainController', function ($scope) {
         localStorage.setItem("hightScore", JSON.stringify(main.highScores));
     });
 
-    $scope.$on("scope-updated", function (event, scoreToAdd) {
-        main.currentPlayer.score += scoreToAdd;
-        updateRank();
-    });
     $scope.$on("failed", function (event) {
         main.currentPlayer.fails++;
         updateRank();
@@ -73,4 +72,74 @@ angular.module('app', []).controller('MainController', function ($scope) {
         if (player1.fails > player2.fails) return 1;
 
     }
+
+    $scope.$on("scope-updated", function (event, reactionTime) {
+        let increment = computeScoreFromReactionTime(reactionTime);
+        main.currentPlayer.score += increment;
+        notifyScoreIncrement(increment);
+        updateRank();
+    });
+
+    function computeScoreFromReactionTime(reactionTime) {
+        let scoreToAdd = 0;
+        if (reactionTime <= 100) {
+            scoreToAdd = 120;
+        } else if (reactionTime > 100 && reactionTime <= 250) {
+            scoreToAdd = 100;
+        } else if (reactionTime > 250 && reactionTime <= 400) {
+            scoreToAdd = 80;
+        } else if (reactionTime > 400 && reactionTime <= 550) {
+            scoreToAdd = 60;
+        } else if (reactionTime > 550 && reactionTime <= 700) {
+            scoreToAdd = 40;
+        } else if (reactionTime > 700 && reactionTime <= 850) {
+            scoreToAdd = 20;
+        }
+        return scoreToAdd;
+    }
+
+    let counter = 0;
+
+    function notifyScoreIncrement(increment) {
+        let index = counter++ % 3;
+        main["scoreIncrement" + index] = "+" + increment + "pt";
+        scoreTab[index].play();
+    }
+
+    const scoreTab = [
+        new mojs.Html({
+            el: '#score0',
+            duration: 300,
+            opacity: {0: 1},
+            scale: {0: 1},
+        }).then({
+            duration: 200,
+            scale: {1: 1.1},
+        }).then({
+            duration: 100,
+            opacity: {1: 0},
+        }), new mojs.Html({
+            el: '#score1',
+            duration: 300,
+            opacity: {0: 1},
+            scale: {0: 1},
+        }).then({
+            duration: 200,
+            scale: {1: 1.1},
+        }).then({
+            duration: 100,
+            opacity: {1: 0},
+        }), score2Html = new mojs.Html({
+            el: '#score2',
+            duration: 300,
+            opacity: {0: 1},
+            scale: {0: 1},
+        }).then({
+            duration: 200,
+            scale: {1: 1.1},
+        }).then({
+            duration: 100,
+            opacity: {1: 0},
+        })];
+
 });

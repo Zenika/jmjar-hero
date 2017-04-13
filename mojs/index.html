@@ -11,10 +11,13 @@
 <body ng-controller="MainController as main" ng-cloak>
 <div id="totalScore">{{main.currentPlayer.score}}</div>
 <div id="harp" tabindex="1"></div>
-<div id="score"></div>
+<div id="score0" class="score">{{main.scoreIncrement0}}</div>
+<div id="score1" class="score">{{main.scoreIncrement1}}</div>
+<div id="score2" class="score">{{main.scoreIncrement2}}</div>
 <img id="logo" src="./img/logo_zenika_gris.png"/>
 
 <div id="player">
+    <img id="logoJmJar" src="./img/jmjar_logo/typo_gris.png"/>
     <h1>Player</h1>
     <div>
         <div class="hbox">
@@ -65,7 +68,6 @@
 <script type="text/javascript" src="harp/string.js"></script>
 <script type="text/javascript" src="harp/target.js"></script>
 <script type="text/javascript" src="harp/success.js"></script>
-<script type="text/javascript" src="./score.js"></script>
 <script type="text/javascript" src="./app.js"></script>
 <script type="text/javascript" src="harp/timeline.js"></script>
 </body>
