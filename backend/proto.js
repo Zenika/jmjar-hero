@@ -10,18 +10,13 @@ var serialPort = new SerialPort("/dev/ttyACM0", {
    parser: SerialPort.parsers.readline('\n')
 });
    
+var keys = ["q","s","d","f","g","h"] 
+
 serialPort.on("open", function () {
    serialPort.on('data', function(data) {
      //console.log('data received: ' + data);
-     if ( data === "Do\r" ) {
-        robot.keyTap("s");
-     }
-     if ( data === "Re\r" ) {
-        robot.keyTap("d");
-     }
-     if ( data === "Mi\r" ) {
-        robot.keyTap("f");
-     }
+     //console.log(keys[(parseInt(data) - 5)]);
+     robot.keyTap(keys[(parseInt(data) - 5)]);
    });
 });
 
