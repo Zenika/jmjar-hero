@@ -42,20 +42,28 @@ function noteFactory(channel, delay) {
 }
 
 window.timeline = new mojs.Timeline({
-    onStart: () => {
-        scope = angular.element(document.body).scope();
-        window.Timer = Date.now();
-    },
-    onComplete: () => {
-        fireAngulerEvent('timeline-completed', {fails: nbFail});
-        $(".troll").remove();
-        nbFail = 0;
-    }
+  onStart: () => {
+      scope = angular.element(document.body).scope();
+      window.Timer = Date.now();
+  },
+  onPlaybackStop: () => {
+    this.start = false;
+    this.clearTroll()
+  },
+  onComplete: () => {
+      fireAngulerEvent('timeline-completed', {fails: nbFail});
+      this.clearTroll();
+  }
 });
+
+this.clearTroll = () => {
+  $(".troll").remove();
+  nbFail = 0;
+}
 
 song.stream.forEach(function (note) {
     let channel = channels[song.notes.indexOf(note.noteNumber) % (channels.length)];
-    timeline.add(noteFactory(channel, note.delay));
+    window.timeline.add(noteFactory(channel, note.delay));
 });
 
 function fireAngulerEvent(name, args) {

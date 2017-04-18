@@ -1,14 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Bungee+Shade');
+@import url('./assets/fonts/Pixeled.ttf');
+
 
 body {
     background-color: black;
     background-size: cover;
     overflow: hidden;
     color: gold;
+    font-family: 'Pixeled', sans-serif;
+    text-transform: uppercase;
 }
 
-#logoJmJar {
-    max-width: 300px;
+h1 {
+    font-family: 'Bungee Shade', cursive;
+    margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 #harp {
@@ -17,7 +30,7 @@ body {
 
 #logo {
     position: absolute;
-    bottom: 50px;
+    bottom: 55px;
     right: 50px;
     height: 150px;
 }
@@ -33,7 +46,7 @@ body {
 }
 
 .troll {
-    background-image: url('./img/troll.png');
+    background-image: url('./assets/img/troll.png');
 }
 
 .white-string {
@@ -73,35 +86,59 @@ body {
     color: gold;
 }
 
-#highScores {
+.set .highScores {
     display: flex;
     flex-direction: column;
     max-width: 40%;
     position: absolute;
-    top: 40%;
+    top: 25%;
     left: 20px;
     margin: 15px;
 }
 
-h1 {
-    font-family: 'Bungee Shade', cursive;
-}
-
-#highScores table {
-    width: 100%;
-
-}
-
-#highScores td {
-    font-size: 24px;
-}
-
-#highScores td.rank {
+.set .highScores td.rank {
     width: 10%;
 }
 
-#highScores td.value {
+.intro input, .intro select {
+    background-color: #000;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    text-align-last: center;
+    text-align: center;
+    font-size: 25px;
+    margin: 10px 0;
+}
+
+.intro input {
+  color: #fff;
+}
+
+.outro .highScores {
+  display: flex;
+  flex-direction: column;
+}
+
+.outro .highScores td.player {
+  padding: 0 10px;
+}
+
+.highScores table {
+    width: 100%;
+}
+
+.highScores td {
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.highScores td.value {
     text-align: right;
+}
+
+.player {
+  letter-spacing: 3px;
 }
 
 #player {
@@ -119,33 +156,22 @@ h1 {
     margin-right: 15px;
 }
 
-#player select {
-    border: none;
-    box-shadow: none;
-    background-image: none;
-    background-color: transparent;
-    color: white;
-    -webkit-appearance: none;
-
-}
-
-#player select:focus {
-    outline: none;
-}
-
-#player input {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: white;
+#player .name {
+  color: white;
 }
 
 #player button {
     background-color: transparent;
     outline: none;
     border: none;
-    width: 100%;
     text-align: end;
+}
+
+#quit {
+  position: absolute;
+  bottom: 50px;
+  left: 20px;
+  margin: 0 15px;
 }
 
 .hbox {
@@ -158,12 +184,15 @@ h1 {
     margin-right: 15px;
 }
 
-.name-error {
+.name-error input {
     animation-duration: 200ms;
     animation-name: blink;
     animation-iteration-count: 3;
     animation-direction: alternate;
-    color: red;
+}
+
+.name-error input::-webkit-input-placeholder {
+  color: #af1e3a;
 }
 
 .currentPlayerRank {
@@ -172,6 +201,36 @@ h1 {
     animation-iteration-count: infinite;
     animation-direction: alternate;
     color: green;
+}
+
+.button {
+  color: gold;
+  font-size: 70px;
+  cursor: pointer;
+  margin: 50px 0;
+}
+
+.button:hover {
+  color: #af1e3a;
+}
+
+.logoJmJar {
+    max-width: 800px;
+}
+
+.trollface {
+  width: 30px;
+  margin: 0 10px;
+}
+
+ul, li {
+  list-style-type: none;
+}
+
+.summary {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 @keyframes blink {
