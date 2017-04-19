@@ -29,7 +29,7 @@ function getNote(channel, delay, callback) {
         easing: 'linear.none',
         onComplete: function () {
             input.isOk = false;
-            document.addEventListener('keydown', eventListener);
+            document.addEventListener('akaievent', eventListener);
         }
     }).then({
         y: {[targetY - distance]: targetY},
@@ -42,14 +42,15 @@ function getNote(channel, delay, callback) {
         easing: 'cubic.out',
         onComplete: function () {
             callback(input);
-            document.removeEventListener('keydown', eventListener);
+            document.removeEventListener('akaievent', eventListener);
             this.el.remove();
         }
     });
 
     function eventListener(event) {
         const inputTime = Date.now() - Timer;
-        if (event.key === channel.key) {
+        console.log(event);
+        if (event.detail === channel.key) {
             input.isOk = true;
             input.inputTime = inputTime;
         }

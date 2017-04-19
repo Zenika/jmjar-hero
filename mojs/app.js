@@ -14,14 +14,22 @@ angular.module('app', []).controller('MainController', function ($scope) {
         //nop
     }
 
-    main.songs = [{name: "Oxygen 4", path: "../music/OXYGENE_4_short.mp3"}];
+    main.songs = [{
+        name: "Oxygen 4",
+        path: "../music/OXYGENE_4_short.mp3"
+    }];
 
     main.currentTitle = main.songs[0].path;
     main.currentName = "";
 
     main.onPlay = function () {
         if (main.currentName && main.currentName.length > 0) {
-            main.currentPlayer = {score: 0, name: main.currentName, fails: 0, rank: main.highScores.length};
+            main.currentPlayer = {
+                score: 0,
+                name: main.currentName,
+                fails: 0,
+                rank: main.highScores.length
+            };
             main.highScores.push(main.currentPlayer);
             let audio = new Audio(main.currentTitle);
             audio.addEventListener("play", function () {
@@ -110,36 +118,62 @@ angular.module('app', []).controller('MainController', function ($scope) {
         new mojs.Html({
             el: '#score0',
             duration: 300,
-            opacity: {0: 1},
-            scale: {0: 1},
+            opacity: {
+                0: 1
+            },
+            scale: {
+                0: 1
+            },
         }).then({
             duration: 200,
-            scale: {1: 1.1},
+            scale: {
+                1: 1.1
+            },
         }).then({
             duration: 100,
-            opacity: {1: 0},
+            opacity: {
+                1: 0
+            },
         }), new mojs.Html({
             el: '#score1',
             duration: 300,
-            opacity: {0: 1},
-            scale: {0: 1},
+            opacity: {
+                0: 1
+            },
+            scale: {
+                0: 1
+            },
         }).then({
             duration: 200,
-            scale: {1: 1.1},
+            scale: {
+                1: 1.1
+            },
         }).then({
             duration: 100,
-            opacity: {1: 0},
+            opacity: {
+                1: 0
+            },
         }), score2Html = new mojs.Html({
             el: '#score2',
             duration: 300,
-            opacity: {0: 1},
-            scale: {0: 1},
+            opacity: {
+                0: 1
+            },
+            scale: {
+                0: 1
+            },
         }).then({
             duration: 200,
-            scale: {1: 1.1},
+            scale: {
+                1: 1.1
+            },
         }).then({
             duration: 100,
-            opacity: {1: 0},
-        })];
+            opacity: {
+                1: 0
+            },
+        })
+    ];
 
+    
 });
