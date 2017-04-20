@@ -6,66 +6,62 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" media="screen" title="no title"
           charset="utf-8">
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.css" media="screen" title="no title" charset="utf-8">
     <link rel="icon" type="image/png" href="./assets/img/favicon-16x16.png" sizes="16x16">
 </head>
 <body ng-controller="MainController as main" ng-cloak>
-  <div ng-show="!main.isPlaying" class="intro container">
+<div ng-show="!main.isPlaying" class="intro container">
+
     <img class="logoJmJar" src="./assets/img/jmjar_logo/typo_noir.png"/>
-    <div class="hbox name" ng-class="{'name-error':main.isError}">
+
+    <div class="highScores">
+        <h1>High Scores</h1>
+        <table>
+            <tr ng-repeat="player in (main.highScores | limitTo: 5) track by $index"
+                ng-class="{'currentPlayerRank':player===main.currentPlayer}">
+                <td class="rank">{{($index+1)}}</td>
+                <td class="player">{{player.name}}</td>
+                <td class="value">{{player.score}}</td>
+            </tr>
+        </table>
+        <table ng-if="main.currentPlayer.rank>10">
+            <tr>
+                <td class="rank">...</td>
+            </tr>
+            <tr class="currentPlayerRank">
+                <td class="rank">{{(main.currentPlayer.rank+1)}}</td>
+                <td class="player">{{main.currentPlayer.name}}</td>
+                <td class="value">{{main.currentPlayer.score}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="name" ng-class="{'name-error':main.isError}">
         <input type="text"
                ng-change="main.onNameChange()"
                ng-keypress="main.onKeyPressed($event)"
-               placeholder="NAME_"
+               placeholder="<ENTER PLAYER NAME>"
                onfocus="this.placeholder = ''"
-               onblur="this.placeholder = 'NAME_'"
+               onblur="this.placeholder = '<ENTER PLAYER NAME>'"
                ng-model="main.currentName"
                maxlength="8">
     </div>
-    <select ng-options="song.name for song in main.songs" ng-model="main.selectedSong"></select>
-    <h1 class="button" ng-click="main.onPlay()">Play</h1>
-  </div>
+    <div class="play-button" ng-click="main.onPlay()">Play</div>
+</div>
 
-  <div ng-show="main.isFinished" class="outro container">
-    <div class="summary">
-      <div>score {{main.currentPlayer.score}}</div>
-      <div>
-        <img class="trollface" src="./assets/img/troll_pixel.png"/>
-        {{main.currentPlayer.fails}}
-      </div>
-      <div>
-        rank {{main.currentPlayer.rank + 1}}
-      </div>
-    </div>
-    <img class="logoJmJar" src="./assets/img/jmjar_logo/typo_noir.png"/>
-    <table class="highScores">
-      <tr ng-repeat="player in (main.highScores | limitTo: 5) track by $index"
-          ng-class="{'currentPlayerRank':player===main.currentPlayer}">
-          <td class="rank">{{($index+1)}}</td>
-          <td class="player">{{player.name}}</td>
-          <td class="value">{{player.score}}</td>
-      </tr>
-    </table>
-    <h1 class="button" ng-click="main.onReplay()">Restart</h1>
-  </div>
-
-  <div ng-show="!main.isFinished && main.isPlaying" class="set">
+<div ng-show="main.isPlaying" class="set">
     <div id="totalScore">{{main.currentPlayer.score}}</div>
     <div id="harp" tabindex="1"></div>
-    <div id="score0" class="score">{{main.scoreIncrement0}}</div>
-    <div id="score1" class="score">{{main.scoreIncrement1}}</div>
-    <div id="score2" class="score">{{main.scoreIncrement2}}</div>
+    <div class="hbox">
+        <div id="score0" class="score">{{main.scoreIncrement0}}</div>
+        <div id="score1" class="score">{{main.scoreIncrement1}}</div>
+        <div id="score2" class="score">{{main.scoreIncrement2}}</div>
+    </div>
     <img id="logo" src="./assets/img/logo_zenika_gris.png"/>
-
+    <h1 id="rushMessage" class="rush-message animated">Keep Focus for<br>The RUSH</h1>
     <div id="player">
-        <h1>Player</h1>
-        <div>
-          <div class="hbox">
-              <p>Song : <span class="name">{{main.selectedSong.name}}</span></p>
-          </div>
-          <div class="hbox" ng-class="{'name-error':main.isError}">
-            <p>Name : <span class="name">{{main.currentName}}</span></p>
-          </div>
-        </div>
+        <h1>Player : </h1>
+        <p><span class="name">{{main.currentPlayer.name}}</span></p>
     </div>
     <div class="highScores">
         <h1>High Scores</h1>
@@ -88,22 +84,19 @@
             </tr>
         </table>
     </div>
-    <div class="button" id="quit">
-        <h1 ng-click="main.onReplay()">Quit</h1>
-    </div>
-  </div>
-  <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
-  <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
-  <script type="text/javascript" src="../midiParser/Oxygene4.mid.js"></script>
-  <script type="text/javascript" src="node_modules/mo-js/build/mo.js"></script>
-  <script type="text/javascript" src="harp/note.js"></script>
-  <script type="text/javascript" src="harp/failure.js"></script>
-  <script type="text/javascript" src="harp/string.js"></script>
-  <script type="text/javascript" src="harp/target.js"></script>
-  <script type="text/javascript" src="harp/success.js"></script>
-  <script type="text/javascript" src="./app.js"></script>
-  <script type="text/javascript" src="harp/timeline.js"></script>
+</div>
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
+<script type="text/javascript" src="../midiParser/Oxygene4.mid.js"></script>
+<script type="text/javascript" src="node_modules/mo-js/build/mo.js"></script>
+<script type="text/javascript" src="harp/note.js"></script>
+<script type="text/javascript" src="harp/failure.js"></script>
+<script type="text/javascript" src="harp/string.js"></script>
+<script type="text/javascript" src="harp/target.js"></script>
+<script type="text/javascript" src="harp/success.js"></script>
+<script type="text/javascript" src="./app.js"></script>
+<script type="text/javascript" src="harp/timeline.js"></script>
 </body>
 </html>

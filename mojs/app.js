@@ -20,7 +20,6 @@ angular.module('app', []).controller('MainController', function ($scope) {
 
     main.currentName = "";
     main.isPlaying = false;
-    main.isFinished = false;
 
     main.initGame = function () {
       main.isPlaying = true;
@@ -30,43 +29,47 @@ angular.module('app', []).controller('MainController', function ($scope) {
       main.audio.addEventListener("play", function () {
           window.timeline.play();
       });
-
-      main.audio.play();
+      main.audio.play();setTimeout(playRushMessage, 68000);
     }
 
-    main.addScript = function(path) {
-      this.script = document.createElement("script");
-      this.script.src = path;
-      this.script.type = "text/javascript";
-      document.body.appendChild(this.script);
+    function playRushMessage() {
+        $('#rushMessage').addClass('bounceInDown');
+    }
+
+    $('#rushMessage').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => setTimeout(() => $('#rushMessage').addClass('bounceOutDown'), 4000));
+
+    main.addScript = function (path) {
+        this.script = document.createElement("script");
+        this.script.src = path;
+        this.script.type = "text/javascript";
+        document.body.appendChild(this.script);
     }
 
     main.playTheme = function () {
-      main.audio = new Audio(main.theme);
-      main.audio.currentTime = 9;
-      main.audio.play();
-      window.setTimeout(function () {
-        main.audio.pause();
-        main.audio.currentTime = 10;
+        main.audio = new Audio(main.theme);
+        main.audio.currentTime = 9;
         main.audio.play();
-      }, 27900);
+        window.setTimeout(function () {
+            main.audio.pause();
+            main.audio.currentTime = 10;
+            main.audio.play();
+        }, 27900);
     }
 
     main.onPlay = function () {
-      if (main.currentName && main.currentName.length > 0) {
-          main.initGame();
-      } else {
-          main.isError = true;
-      }
+        if (main.currentName && main.currentName.length > 0) {
+            main.initGame();
+            main.currentName = "";
+        } else {
+            main.isError = true;
+        }
     };
 
     main.onReplay = function () {
-      window.location.reload(); // FIXME I'm ugly
-
-      window.timeline.stop();
-      main.isFinished = false;
-      main.isPlaying = false;
-      main.audio.pause();
+        window.location.reload(); // FIXME I'm ugly
+        window.timeline.stop();
+        main.isPlaying = false;
+        main.audio.pause();
     }
 
     main.onNameChange = function () {
@@ -85,7 +88,7 @@ angular.module('app', []).controller('MainController', function ($scope) {
     $scope.$on("timeline-completed", function (event) {
         main.highScores = main.highScores.sort(sortScores);
         localStorage.setItem("hightScore", JSON.stringify(main.highScores));
-        main.isFinished = true;
+        main.isPlaying = false;
         main.playTheme();
     });
 
@@ -150,6 +153,8 @@ angular.module('app', []).controller('MainController', function ($scope) {
             duration: 300,
             opacity: {0: 1},
             scale: {0: 1},
+            y: 0,
+            x: 20
         }).then({
             duration: 200,
             scale: {1: 1.1},
@@ -161,6 +166,8 @@ angular.module('app', []).controller('MainController', function ($scope) {
             duration: 300,
             opacity: {0: 1},
             scale: {0: 1},
+            y: 50,
+            x: -50
         }).then({
             duration: 200,
             scale: {1: 1.1},
@@ -172,6 +179,8 @@ angular.module('app', []).controller('MainController', function ($scope) {
             duration: 300,
             opacity: {0: 1},
             scale: {0: 1},
+            y: 100,
+            x: 50
         }).then({
             duration: 200,
             scale: {1: 1.1},
