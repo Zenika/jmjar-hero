@@ -7,7 +7,7 @@ const fileName = 'Oxygene4.mid';
 const leadTrack = 1;
 const file = fs.readFileSync('Oxygene4.mid', 'binary');
 const forcedBPM = 121;
-const firstNoteAt = 9500;
+const firstNoteAt = 9500 - 700;
 const duration = 111541.0;
 //</config>
 
@@ -60,7 +60,7 @@ importedNotes.forEach(function (note) {
 
 console.log("notes ------------------------------------------");
 console.log(importedNotes);
-fs.writeFileSync(fileName + '.js', 'const song =' + JSON.stringify({
+fs.writeFileSync(fileName + '.js', 'window.song =' + JSON.stringify({
         notes: noteList.sort(),
         stream: importedNotes
     }) + ';');

@@ -30,6 +30,7 @@ angular.module('app', []).controller('MainController', function ($scope) {
       main.audio.addEventListener("play", function () {
           window.timeline.play();
       });
+
       main.audio.play();
     }
 
@@ -119,17 +120,17 @@ angular.module('app', []).controller('MainController', function ($scope) {
 
     function computeScoreFromReactionTime(reactionTime) {
         let scoreToAdd = 0;
-        if (reactionTime <= 100) {
+        if (reactionTime <= 50) {
             scoreToAdd = 120;
-        } else if (reactionTime > 100 && reactionTime <= 250) {
+        } else if (reactionTime > 50 && reactionTime <= 80) {
             scoreToAdd = 100;
-        } else if (reactionTime > 250 && reactionTime <= 400) {
+        } else if (reactionTime > 80 && reactionTime <= 110) {
             scoreToAdd = 80;
-        } else if (reactionTime > 400 && reactionTime <= 550) {
+        } else if (reactionTime > 110 && reactionTime <= 140) {
             scoreToAdd = 60;
-        } else if (reactionTime > 550 && reactionTime <= 700) {
+        } else if (reactionTime > 140 && reactionTime <= 170) {
             scoreToAdd = 40;
-        } else if (reactionTime > 700 && reactionTime <= 850) {
+        } else if (reactionTime > 170 && reactionTime <= 200) {
             scoreToAdd = 20;
         }
         return scoreToAdd;
