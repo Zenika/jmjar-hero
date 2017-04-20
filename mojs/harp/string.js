@@ -30,7 +30,7 @@ function string(channel) {
         }
     });
 
-    document.addEventListener('keydown', function () {
+    document.addEventListener('keydown', function (event) {
         if (event.key === channel.key) {
             shape.play();
         }

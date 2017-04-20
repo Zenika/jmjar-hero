@@ -16,7 +16,9 @@ serialPort.on("open", function () {
    serialPort.on('data', function(data) {
      //console.log('data received: ' + data);
      //console.log(keys[(parseInt(data) - 5)]);
-     robot.keyTap(keys[(parseInt(data) - 5)]);
+     if ((parseInt(data) >= 5) && (parseInt(data) <= 10)) {
+         robot.keyTap(keys[(parseInt(data) - 5)]);
+     }
    });
 });
 

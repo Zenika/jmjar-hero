@@ -38,7 +38,7 @@
     </div>
     <img class="logoJmJar" src="./assets/img/jmjar_logo/typo_noir.png"/>
     <table class="highScores">
-      <tr ng-repeat="player in (main.highScores | limitTo: 3) track by $index"
+      <tr ng-repeat="player in (main.highScores | limitTo: 5) track by $index"
           ng-class="{'currentPlayerRank':player===main.currentPlayer}">
           <td class="rank">{{($index+1)}}</td>
           <td class="player">{{player.name}}</td>

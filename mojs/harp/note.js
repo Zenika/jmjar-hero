@@ -49,7 +49,7 @@ function getNote(channel, delay, callback) {
 
     function eventListener(event) {
         const inputTime = Date.now() - Timer;
-        if (event.key === channel.key) {
+        if (event.key === channel.key && !input.isOk) {
             input.isOk = true;
             input.inputTime = inputTime;
         }

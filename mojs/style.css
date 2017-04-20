@@ -26,6 +26,7 @@ h1 {
 
 #harp {
     transform: perspective(30px) rotateX(-1deg) translateY(600px) scale(1.5);
+    outline:none;
 }
 
 #logo {
@@ -231,6 +232,7 @@ ul, li {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  font-size: 30px;
 }
 
 @keyframes blink {
