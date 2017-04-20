@@ -14,24 +14,59 @@ angular.module('app', []).controller('MainController', function ($scope) {
         //nop
     }
 
-    main.songs = [{name: "Oxygen 4", path: "../music/OXYGENE_4_short.mp3"}];
+    main.theme = "./assets/music/jmjar_hero_theme.mp3";
+    main.songs = [{name: "Oxygen 4", path: "../music/OXYGENE_4_short.mp3", parsed: "../midiParser/Oxygene4.mid.js"}];
+    main.selectedSong = main.songs[0];
 
-    main.currentTitle = main.songs[0].path;
     main.currentName = "";
+    main.isPlaying = false;
+    main.isFinished = false;
+
+    main.initGame = function () {
+      main.isPlaying = true;
+      main.currentPlayer = {score: 0, name: main.currentName, fails: 0, rank: main.highScores.length};
+      main.highScores.push(main.currentPlayer);
+      main.audio = new Audio(main.selectedSong.path);
+      main.audio.addEventListener("play", function () {
+          window.timeline.play();
+      });
+      main.audio.play();
+    }
+
+    main.addScript = function(path) {
+      this.script = document.createElement("script");
+      this.script.src = path;
+      this.script.type = "text/javascript";
+      document.body.appendChild(this.script);
+    }
+
+    main.playTheme = function () {
+      main.audio = new Audio(main.theme);
+      main.audio.currentTime = 9;
+      main.audio.play();
+      window.setTimeout(function () {
+        main.audio.pause();
+        main.audio.currentTime = 10;
+        main.audio.play();
+      }, 27900);
+    }
 
     main.onPlay = function () {
-        if (main.currentName && main.currentName.length > 0) {
-            main.currentPlayer = {score: 0, name: main.currentName, fails: 0, rank: main.highScores.length};
-            main.highScores.push(main.currentPlayer);
-            let audio = new Audio(main.currentTitle);
-            audio.addEventListener("play", function () {
-                window.timeline.play();
-            });
-            audio.play();
-        } else {
-            main.isError = true;
-        }
+      if (main.currentName && main.currentName.length > 0) {
+          main.initGame();
+      } else {
+          main.isError = true;
+      }
     };
+
+    main.onReplay = function () {
+      window.location.reload(); // FIXME I'm ugly
+
+      window.timeline.stop();
+      main.isFinished = false;
+      main.isPlaying = false;
+      main.audio.pause();
+    }
 
     main.onNameChange = function () {
         if (main.currentName && main.currentName.length > 0) {
@@ -49,6 +84,8 @@ angular.module('app', []).controller('MainController', function ($scope) {
     $scope.$on("timeline-completed", function (event) {
         main.highScores = main.highScores.sort(sortScores);
         localStorage.setItem("hightScore", JSON.stringify(main.highScores));
+        main.isFinished = true;
+        main.playTheme();
     });
 
     $scope.$on("failed", function (event) {
