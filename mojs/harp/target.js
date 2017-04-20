@@ -8,7 +8,7 @@ function target() {
         radiusY: noteRadius + 10,
         strokeWidth: 2,
         isShowStart: true,
-        y: targetY + 10,
+        y: targetY - 30,
         x: 10,
         parent: harp
     });
