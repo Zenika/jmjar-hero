@@ -23,22 +23,22 @@ angular.module('app', []).controller('MainController', function ($scope) {
     main.theme = new Audio(main.theme);
     main.theme.loop = true
     main.initGame = function () {
-      main.theme.pause();
-      main.isPlaying = true;
+      main.theme.pause();main.isPlaying = true;
       main.currentPlayer = {score: 0, name: main.currentName, fails: 0, rank: main.highScores.length};
       main.highScores.push(main.currentPlayer);
       main.audio = new Audio(main.selectedSong.path);
       main.audio.addEventListener("play", function () {
           window.timeline.play();
       });
-      main.audio.play();setTimeout(playRushMessage, 68000);
+      main.audio.play();$('#rushMessage').removeClass('bounceInDown bounceOutDown');setTimeout(playRushMessage, 68000);
     }
 
     function playRushMessage() {
         $('#rushMessage').addClass('bounceInDown');
+        $('#rushMessage').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => {
+            setTimeout(() => $('#rushMessage').addClass('bounceOutDown'), 4000);
+        });
     }
-
-    $('#rushMessage').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', () => setTimeout(() => $('#rushMessage').addClass('bounceOutDown'), 4000));
 
     main.addScript = function (path) {
         this.script = document.createElement("script");
