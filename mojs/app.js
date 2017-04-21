@@ -20,8 +20,10 @@ angular.module('app', []).controller('MainController', function ($scope) {
 
     main.currentName = "";
     main.isPlaying = false;
-
+    main.theme = new Audio(main.theme);
+    main.theme.loop = true
     main.initGame = function () {
+      main.theme.pause();
       main.isPlaying = true;
       main.currentPlayer = {score: 0, name: main.currentName, fails: 0, rank: main.highScores.length};
       main.highScores.push(main.currentPlayer);
@@ -46,15 +48,11 @@ angular.module('app', []).controller('MainController', function ($scope) {
     }
 
     main.playTheme = function () {
-        main.audio = new Audio(main.theme);
-        main.audio.currentTime = 9;
-        main.audio.play();
-        window.setTimeout(function () {
-            main.audio.pause();
-            main.audio.currentTime = 10;
-            main.audio.play();
-        }, 27900);
+        main.theme.currentTime = 9;
+        main.theme.play();
     }
+
+    main.playTheme()
 
     main.onPlay = function () {
         if (main.currentName && main.currentName.length > 0) {
@@ -124,19 +122,19 @@ angular.module('app', []).controller('MainController', function ($scope) {
     function computeScoreFromReactionTime(reactionTime) {
         let scoreToAdd = 0;
         if (reactionTime <= 50) {
-            scoreToAdd = 120;
+            scoreToAdd = 30;
         } else if (reactionTime > 50 && reactionTime <= 80) {
-            scoreToAdd = 100;
+            scoreToAdd = 25;
         } else if (reactionTime > 80 && reactionTime <= 110) {
-            scoreToAdd = 80;
-        } else if (reactionTime > 110 && reactionTime <= 140) {
-            scoreToAdd = 60;
-        } else if (reactionTime > 140 && reactionTime <= 170) {
-            scoreToAdd = 40;
-        } else if (reactionTime > 170 && reactionTime <= 200) {
             scoreToAdd = 20;
+        } else if (reactionTime > 110 && reactionTime <= 140) {
+            scoreToAdd = 15;
+        } else if (reactionTime > 140 && reactionTime <= 170) {
+            scoreToAdd = 10;
+        } else if (reactionTime > 170 && reactionTime <= 200) {
+            scoreToAdd = 5;
         }
-        return scoreToAdd;
+        return scoreToAdd * 20;
     }
 
     let counter = 0;

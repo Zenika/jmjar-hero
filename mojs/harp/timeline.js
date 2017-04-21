@@ -58,9 +58,17 @@ window.timeline = new mojs.Timeline({
                   closest = n.delay - (timing + 400)
                 }
             })
-            theNote.fired = true
             const precision = theNote.delay - (timing + 400)
-            fireAngulerEvent('scope-updated', Math.abs(precision));
+            theNote.fired = true
+            if(Math.abs(precision) > 200) {
+              nbFail++;
+              let failY = failedNoteY + (nbFail % 60.5) * (noteRadius / 4);
+              let failX = failedNoteX + Math.ceil(nbFail / 60) * noteRadius * 2;
+              failure({[channels[currentChannel].x]: failX}, {[(targetY - 30) ]: failY});
+              fireAngulerEvent('failed');
+            } else {
+              fireAngulerEvent('scope-updated', Math.abs(precision));
+            }
           }
         }
         // success(channel.x, {[targetY]: targetY - 150});
@@ -88,7 +96,6 @@ song.stream.forEach(function (_note) {
     let channel = channels[channelIndex];
     window.timeline.add(getNote(channel, _note.delay, function (input) {
       const note = notesBychannels[channelIndex].find(n => n.delay === _note.delay)
-      console.log(note)
       if(!note.fired) {
         note.fired = true
         nbFail++;
