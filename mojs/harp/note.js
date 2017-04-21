@@ -23,7 +23,6 @@ function getNote(channel, delay, callback) {
         easing: 'cubic.out',
         onComplete: function () {
             callback()
-            this.el.remove();
         }
     });
 
